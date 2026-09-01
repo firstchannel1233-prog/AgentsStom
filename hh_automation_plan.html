@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Автоматизация разбора откликов hh.ru — план и схема</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap');
+
+:root{
+  --bg: #F6F9F8;
+  --surface: #FFFFFF;
+  --ink: #16232A;
+  --ink-soft: #55666B;
+  --teal: #00897B;
+  --teal-dark: #00695C;
+  --teal-wash: rgba(0,137,123,0.08);
+  --teal-wash-strong: rgba(0,137,123,0.14);
+  --amber: #A6641E;
+  --amber-wash: rgba(166,100,30,0.09);
+  --line: #DDE6E4;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body{
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  line-height: 1.6;
+  padding: 70px 32px 100px;
+}
+
+.page{ max-width: 880px; margin: 0 auto; }
+
+h1,h2,h3{ font-family: 'Space Grotesk', 'Inter', sans-serif; font-weight: 600; color: var(--ink); }
+
+.header{ margin-bottom: 56px; padding-bottom: 32px; border-bottom: 1px solid var(--line); }
+.header .kicker{ font-size: 13px; font-weight: 600; color: var(--teal); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 14px; }
+.header h1{ font-size: 34px; line-height: 1.25; max-width: 620px; margin-bottom: 14px; }
+.header p{ font-size: 16px; color: var(--ink-soft); max-width: 560px; }
+
+.section{ margin-bottom: 64px; }
+.section h2{ font-size: 21px; margin-bottom: 22px; }
+.section > p.lead{ color: var(--ink-soft); font-size: 15px; margin-bottom: 24px; max-width: 620px; }
+
+/* Criteria */
+.criteria-grid{ display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+@media (max-width: 700px){ .criteria-grid{ grid-template-columns: 1fr; } }
+
+.criteria-card{ background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 24px 24px 20px; }
+.criteria-card.hard{ border-top: 3px solid var(--amber); }
+.criteria-card.soft{ border-top: 3px solid var(--teal); }
+.criteria-card h3{ font-size: 15px; margin-bottom: 4px; }
+.criteria-card .sub{ font-size: 13px; color: var(--ink-soft); margin-bottom: 16px; }
+
+.crit-list{ list-style: none; }
+.crit-list li{ padding: 10px 0; border-bottom: 1px solid var(--line); font-size: 14.5px; display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+.crit-list li:last-child{ border-bottom: none; }
+.crit-list .weight{ font-family: 'Space Grotesk', sans-serif; font-weight: 600; color: var(--teal-dark); font-size: 14px; white-space: nowrap; }
+.crit-list.hard li .weight{ color: var(--amber); }
+
+/* Roadmap */
+.roadmap{ position: relative; padding-left: 40px; }
+.roadmap::before{ content:''; position:absolute; left: 11px; top: 6px; bottom: 6px; width: 2px; background: var(--line); }
+.phase{ position: relative; padding-bottom: 34px; }
+.phase:last-child{ padding-bottom: 0; }
+.phase::before{
+  content: attr(data-n); position:absolute; left: -40px; top: 0; width: 24px; height: 24px;
+  background: var(--surface); border: 2px solid var(--teal); border-radius: 50%;
+  color: var(--teal-dark); font-family: 'Space Grotesk', sans-serif; font-size: 12px; font-weight: 700;
+  display:flex; align-items:center; justify-content:center;
+}
+.phase h3{ font-size: 16.5px; margin-bottom: 8px; }
+.phase p{ font-size: 14.5px; color: var(--ink-soft); margin-bottom: 10px; max-width: 580px; }
+.phase ul{ list-style: none; }
+.phase ul li{ font-size: 14.5px; color: var(--ink); padding-left: 18px; position: relative; margin-bottom: 6px; }
+.phase ul li::before{ content:''; position:absolute; left:0; top:9px; width:6px; height:6px; border-radius:50%; background: var(--teal); }
+
+/* Diagram */
+.diagram-wrap{ background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 28px 20px; overflow-x: auto; }
+.legend{ display:flex; gap: 22px; margin-top: 18px; flex-wrap: wrap; font-size: 13px; color: var(--ink-soft); }
+.legend span{ display:inline-flex; align-items:center; gap:7px; }
+.legend i{ width: 11px; height: 11px; border-radius: 3px; display:inline-block; }
+
+.footer{ padding-top: 28px; border-top: 1px solid var(--line); font-size: 13px; color: var(--ink-soft); }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="header">
+    <div class="kicker">Найм · Операционная автоматизация</div>
+    <h1>Автоматизация разбора откликов на hh.ru</h1>
+    <p>Критерии отбора, логика работы AI-скоринга и последовательность внедрения — от подключения API до уведомления менеджера о готовом шортлисте.</p>
+  </div>
+
+  <div class="section">
+    <h2>Критерии отбора</h2>
+    <p class="lead">Жёсткие критерии проверяются кодом до обращения к AI и решают судьбу отклика без исключений. Мягкие критерии оценивает AI с опорой на базу знаний о компании и позиции, только у кандидатов, прошедших жёсткий фильтр.</p>
+    <div class="criteria-grid">
+      <div class="criteria-card hard">
+        <h3>Жёсткие критерии</h3>
+        <div class="sub">Да / нет · отсеивают до AI</div>
+        <ul class="crit-list hard">
+          <li><span>Релевантность опыта позиции</span><span class="weight">must</span></li>
+          <li><span>Локация / формат работы</span><span class="weight">must</span></li>
+          <li><span>Зарплатные ожидания в вилке</span><span class="weight">must</span></li>
+          <li><span>Обязательные hard skills присутствуют</span><span class="weight">must</span></li>
+        </ul>
+      </div>
+      <div class="criteria-card soft">
+        <h3>Мягкие критерии</h3>
+        <div class="sub">Оценивает AI, взвешенный score</div>
+        <ul class="crit-list">
+          <li><span>Глубина обязательных навыков</span><span class="weight">40%</span></li>
+          <li><span>Логика карьеры, нет тревожных паттернов</span><span class="weight">20%</span></li>
+          <li><span>Качество сопроводительного письма</span><span class="weight">20%</span></li>
+          <li><span>Софт-скиллы по тексту резюме</span><span class="weight">20%</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Схема процесса</h2>
+    <p class="lead">Отклик проходит два фильтра подряд: сначала формальный (код), затем смысловой (AI). До ручного просмотра менеджера доходят только средние по score кандидаты — явные да и явные нет система решает сама.</p>
+    <div class="diagram-wrap">
+<svg viewBox="0 0 1000 800" xmlns="http://www.w3.org/2000/svg" width="100%" style="max-width:1000px;display:block;margin:0 auto;">
+  <defs>
+    <marker id="arrowTeal" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L6,3 L0,6 Z" fill="#00897B"/>
+    </marker>
+    <marker id="arrowAmber" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L6,3 L0,6 Z" fill="#A6641E"/>
+    </marker>
+    <marker id="arrowGrey" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L6,3 L0,6 Z" fill="#8A9A98"/>
+    </marker>
+  </defs>
+
+  <!-- font -->
+  <style>
+    .node-title{ font: 600 14px 'Space Grotesk', sans-serif; fill:#16232A; }
+    .node-sub{ font: 400 12px 'Inter', sans-serif; fill:#55666B; }
+    .edge-label{ font: 500 11.5px 'Inter', sans-serif; fill:#55666B; }
+    .box{ fill:#FFFFFF; stroke:#DDE6E4; stroke-width:1.4; }
+    .box-teal{ fill:#FFFFFF; stroke:#00897B; stroke-width:1.6; }
+    .box-amber{ fill:#FBF6EF; stroke:#A6641E; stroke-width:1.4; }
+  </style>
+
+  <!-- Spine nodes -->
+  <rect x="140" y="20" width="320" height="54" rx="8" class="box"/>
+  <text x="300" y="52" text-anchor="middle" class="node-title">Отклик кандидата на hh.ru</text>
+
+  <rect x="140" y="108" width="320" height="54" rx="8" class="box"/>
+  <text x="300" y="132" text-anchor="middle" class="node-title">Забор резюме через API</text>
+  <text x="300" y="150" text-anchor="middle" class="node-sub">данные кандидата, структурированно</text>
+
+  <rect x="120" y="196" width="360" height="80" rx="8" class="box-teal"/>
+  <text x="300" y="222" text-anchor="middle" class="node-title">Жёсткий фильтр</text>
+  <text x="300" y="242" text-anchor="middle" class="node-sub">релевантность · локация · зарплата</text>
+  <text x="300" y="258" text-anchor="middle" class="node-sub">обязательные hard skills</text>
+
+  <rect x="140" y="326" width="320" height="64" rx="8" class="box"/>
+  <text x="300" y="352" text-anchor="middle" class="node-title">AI-скоринг</text>
+  <text x="300" y="370" text-anchor="middle" class="node-sub">мягкие критерии + база знаний о позиции</text>
+
+  <rect x="120" y="440" width="360" height="70" rx="8" class="box-teal"/>
+  <text x="300" y="470" text-anchor="middle" class="node-title">Порог по итоговому score</text>
+  <text x="300" y="488" text-anchor="middle" class="node-sub">8–10 · 5–7 · ниже 5</text>
+
+  <rect x="140" y="580" width="320" height="54" rx="8" class="box"/>
+  <text x="300" y="612" text-anchor="middle" class="node-title">Анкета / тестовое задание</text>
+
+  <rect x="120" y="668" width="360" height="70" rx="8" class="box"/>
+  <text x="300" y="696" text-anchor="middle" class="node-title">CRM + уведомление менеджеру</text>
+  <text x="300" y="714" text-anchor="middle" class="node-sub">Битрикс24 / Notion · Telegram</text>
+
+  <!-- Side outcome nodes -->
+  <rect x="660" y="196" width="240" height="60" rx="8" class="box-amber"/>
+  <text x="780" y="222" text-anchor="middle" class="node-title">Не прошёл</text>
+  <text x="780" y="240" text-anchor="middle" class="node-sub">архив, без уведомления</text>
+
+  <rect x="660" y="418" width="240" height="52" rx="8" class="box-amber"/>
+  <text x="780" y="440" text-anchor="middle" class="node-title">Низкий score</text>
+  <text x="780" y="456" text-anchor="middle" class="node-sub">архив</text>
+
+  <rect x="660" y="492" width="240" height="60" rx="8" class="box"/>
+  <text x="780" y="516" text-anchor="middle" class="node-title">Средний score</text>
+  <text x="780" y="534" text-anchor="middle" class="node-sub">ручной просмотр менеджера</text>
+
+  <!-- Spine arrows -->
+  <line x1="300" y1="74" x2="300" y2="106" stroke="#00897B" stroke-width="1.6" marker-end="url(#arrowTeal)"/>
+  <line x1="300" y1="162" x2="300" y2="194" stroke="#00897B" stroke-width="1.6" marker-end="url(#arrowTeal)"/>
+  <line x1="300" y1="276" x2="300" y2="324" stroke="#00897B" stroke-width="1.6" marker-end="url(#arrowTeal)"/>
+  <text x="316" y="304" class="edge-label">прошёл все 4</text>
+
+  <line x1="300" y1="390" x2="300" y2="438" stroke="#00897B" stroke-width="1.6" marker-end="url(#arrowTeal)"/>
+  <line x1="300" y1="510" x2="300" y2="578" stroke="#00897B" stroke-width="1.6" marker-end="url(#arrowTeal)"/>
+  <text x="316" y="550" class="edge-label">высокий score</text>
+
+  <line x1="300" y1="634" x2="300" y2="666" stroke="#00897B" stroke-width="1.6" marker-end="url(#arrowTeal)"/>
+
+  <!-- Branch to reject 1 -->
+  <line x1="480" y1="230" x2="658" y2="226" stroke="#A6641E" stroke-width="1.4" marker-end="url(#arrowAmber)"/>
+  <text x="500" y="220" class="edge-label">не прошёл хоть один</text>
+
+  <!-- Branch to low score -->
+  <line x1="480" y1="460" x2="658" y2="444" stroke="#A6641E" stroke-width="1.4" marker-end="url(#arrowAmber)"/>
+  <text x="500" y="435" class="edge-label">ниже 5</text>
+
+  <!-- Branch to mid score -->
+  <line x1="480" y1="480" x2="658" y2="518" stroke="#8A9A98" stroke-width="1.4" marker-end="url(#arrowGrey)"/>
+  <text x="500" y="500" class="edge-label">5–7</text>
+
+  <!-- Manual review merges back into CRM -->
+  <path d="M 780 552 C 780 640, 480 703, 482 703" fill="none" stroke="#8A9A98" stroke-width="1.4" stroke-dasharray="4 4" marker-end="url(#arrowGrey)"/>
+  <text x="640" y="640" class="edge-label">решение менеджера</text>
+</svg>
+    </div>
+    <div class="legend">
+      <span><i style="background:#00897B"></i>основной поток</span>
+      <span><i style="background:#8A9A98"></i>ручной просмотр</span>
+      <span><i style="background:#A6641E"></i>отсев / архив</span>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Роадмап внедрения</h2>
+    <div class="roadmap">
+      <div class="phase" data-n="1">
+        <h3>Подготовка</h3>
+        <p>Собираем базу знаний и получаем техническую основу для остальных этапов.</p>
+        <ul>
+          <li>База знаний: компания, реальные обязанности позиции, стоп-факторы, вилка зарплаты, портрет идеального кандидата</li>
+          <li>OAuth-доступ к hh.ru API, регистрация приложения на dev.hh.ru</li>
+          <li>Финальный список жёстких и мягких критериев под конкретную вакансию</li>
+        </ul>
+      </div>
+      <div class="phase" data-n="2">
+        <h3>Забор откликов и жёсткий фильтр</h3>
+        <p>Отклики автоматически попадают в систему и проходят первый, формальный отсев без AI.</p>
+        <ul>
+          <li>Опрос API на новые отклики по вакансии (n8n/Make)</li>
+          <li>Забор резюме кандидата в структурированном виде</li>
+          <li>Жёсткие фильтры кодом: релевантность, локация, зарплата, hard skills</li>
+        </ul>
+      </div>
+      <div class="phase" data-n="3">
+        <h3>AI-скоринг</h3>
+        <p>Кандидаты, прошедшие жёсткий фильтр, получают оценку по мягким критериям.</p>
+        <ul>
+          <li>Промпт: база знаний + критерии с весами + резюме → структурированный JSON-ответ</li>
+          <li>Пороговые решения: 8–10 шортлист, 5–7 ручной просмотр, ниже 5 отказ</li>
+        </ul>
+      </div>
+      <div class="phase" data-n="4">
+        <h3>Анкета и тестовое</h3>
+        <p>Уточняем то, чего нет в резюме — но только у кандидатов с хорошим score.</p>
+        <ul>
+          <li>Короткая форма под уточняющие вопросы (готовность к дате, скилл, отсутствующий в резюме)</li>
+          <li>Автоотправка ссылки через сообщение hh.ru API или email</li>
+        </ul>
+      </div>
+      <div class="phase" data-n="5">
+        <h3>CRM и уведомления</h3>
+        <p>Результат всей цепочки становится видимым для менеджера.</p>
+        <ul>
+          <li>Кандидат, score и вердикт AI — в Битрикс24 / Notion</li>
+          <li>Уведомление менеджеру в Telegram по каждому кандидату в шортлисте</li>
+          <li>Опционально: авто-отказ низким score с вежливым шаблоном</li>
+        </ul>
+      </div>
+      <div class="phase" data-n="6">
+        <h3>Калибровка</h3>
+        <p>Сверяем решения AI с реальным выбором человека и донастраиваем систему.</p>
+        <ul>
+          <li>Прогон первой партии реальных откликов</li>
+          <li>Сверка вердиктов AI с ручным решением менеджера, поиск расхождений</li>
+          <li>Корректировка весов критериев и промпта по итогам</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">Александр Ушаков · план автоматизации разбора откликов hh.ru</div>
+
+</div>
+</body>
+</html>
