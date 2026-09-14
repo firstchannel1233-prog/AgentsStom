@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Бухгалтерский аутсорсинг для стоматологий — анализ конкурентов</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#EFEDE6;
+    --ink:#1E2A26;
+    --ink-soft:#57655F;
+    --line:#D3CEC0;
+    --line-soft:#E2DED2;
+    --teal:#2F6F5E;
+    --teal-tint:#E5EEEA;
+    --clay:#96602F;
+    --clay-tint:#F1E6D6;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Inter',system-ui,sans-serif;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:840px;margin:0 auto;padding:72px 28px 100px;}
+  a{color:inherit;}
+
+  /* ---------- Hero ---------- */
+  header.hero{
+    display:grid;
+    grid-template-columns:1fr auto;
+    gap:32px;
+    align-items:start;
+    margin-bottom:8px;
+  }
+  header.hero .htext .meta{
+    font-size:13.5px;color:var(--ink-soft);margin-bottom:18px;
+    display:flex;align-items:center;gap:10px;
+  }
+  header.hero .meta .dot{
+    width:6px;height:6px;border-radius:50%;background:var(--teal);
+    display:inline-block;
+  }
+  header.hero .meta .dot.clay{background:var(--clay);}
+  header.hero h1{
+    font-family:'Fraunces',serif;
+    font-weight:500;
+    font-size:clamp(32px,5vw,48px);
+    line-height:1.08;
+    margin:0 0 20px;
+    letter-spacing:-0.01em;
+    max-width:14ch;
+  }
+  header.hero p.lede{
+    font-size:17px;
+    color:var(--ink-soft);
+    max-width:56ch;
+    margin:0;
+  }
+  header.hero .motif{width:96px;height:96px;flex:none;margin-top:6px;}
+  @media (max-width:640px){
+    header.hero{grid-template-columns:1fr;}
+    header.hero .motif{display:none;}
+  }
+
+  .intro{
+    max-width:66ch;
+    font-size:15.5px;
+    color:var(--ink);
+    margin:48px 0 40px;
+    padding-top:28px;
+    border-top:1px solid var(--line);
+  }
+  .intro p{margin:0 0 15px;}
+  .intro p:last-child{margin-bottom:0;}
+
+  /* ---------- Index ---------- */
+  nav.index{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:0 40px;
+    margin-bottom:72px;
+    padding:24px 0;
+    border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+  }
+  nav.index .col-title{
+    font-size:12.5px;font-weight:600;color:var(--ink-soft);
+    margin:0 0 12px;
+  }
+  nav.index ol{list-style:none;margin:0;padding:0;}
+  nav.index li{
+    font-size:14.5px;
+    padding:5px 0;
+    border-bottom:1px solid var(--line-soft);
+  }
+  nav.index li:last-child{border-bottom:none;}
+  nav.index a{text-decoration:none;}
+  nav.index a:hover{color:var(--teal);}
+  nav.index .group--niche a:hover{color:var(--clay);}
+  nav.index .n{color:var(--ink-soft);margin-right:8px;font-variant-numeric:tabular-nums;}
+  @media (max-width:560px){
+    nav.index{grid-template-columns:1fr;gap:28px 0;}
+  }
+
+  /* ---------- Groups ---------- */
+  section.group{
+    margin-bottom:72px;
+    padding-left:20px;
+    border-left:2px solid var(--teal);
+  }
+  section.group--niche{border-left-color:var(--clay);}
+
+  .group-head h2{
+    font-family:'Fraunces',serif;
+    font-weight:500;
+    font-size:26px;
+    margin:0 0 6px;
+  }
+  .group-note{
+    font-size:14.5px;
+    color:var(--ink-soft);
+    max-width:58ch;
+    margin:0 0 40px;
+  }
+
+  .company{
+    padding:28px 0;
+    border-top:1px solid var(--line);
+    scroll-margin-top:24px;
+  }
+  section.group > .company:first-of-type{border-top:none;padding-top:0;}
+
+  .company .row-top{
+    display:flex;
+    align-items:baseline;
+    gap:12px;
+    margin-bottom:4px;
+  }
+  .company .idx{
+    font-family:'Fraunces',serif;
+    font-size:14px;
+    color:var(--ink-soft);
+    min-width:20px;
+    font-variant-numeric:tabular-nums;
+  }
+  .company h3{
+    margin:0;
+    font-size:19px;
+    font-weight:600;
+  }
+  .company h3 a{
+    text-decoration:none;
+    border-bottom:1.5px solid var(--teal);
+    padding-bottom:1px;
+  }
+  .group--niche .company h3 a{border-bottom-color:var(--clay);}
+  .company h3 a:hover{color:var(--teal);}
+  .group--niche .company h3 a:hover{color:var(--clay);}
+
+  .company .role{
+    font-size:14px;
+    color:var(--ink-soft);
+    margin:0 0 18px;
+    padding-left:32px;
+  }
+
+  .company .body-grid{
+    padding-left:32px;
+    display:grid;
+    grid-template-columns:1.15fr 1fr;
+    gap:28px;
+  }
+  @media (max-width:620px){
+    .company .body-grid{grid-template-columns:1fr;gap:16px;}
+  }
+
+  .company .advantages h4,
+  .company .takeaway h4{
+    font-size:12px;
+    font-weight:600;
+    color:var(--ink-soft);
+    margin:0 0 8px;
+  }
+  .company .advantages ul{
+    margin:0;
+    padding-left:16px;
+    font-size:14px;
+  }
+  .company .advantages li{margin-bottom:5px;}
+  .company .advantages li:last-child{margin-bottom:0;}
+
+  .company .takeaway{
+    border-left:2px solid var(--teal);
+    padding:2px 0 2px 16px;
+    font-size:14px;
+  }
+  .group--niche .company .takeaway{border-left-color:var(--clay);}
+  .company .takeaway h4{color:var(--teal);}
+  .group--niche .company .takeaway h4{color:var(--clay);}
+
+  /* ---------- Synthesis ---------- */
+  section.synthesis{
+    margin-top:8px;
+    padding-top:40px;
+    border-top:1px solid var(--line);
+  }
+  .synthesis-head h2{
+    font-family:'Fraunces',serif;
+    font-weight:500;
+    font-size:26px;
+    margin:0 0 6px;
+  }
+  .synthesis-head .group-note{margin-bottom:0;}
+
+  .synthesis-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:40px 44px;
+    margin-top:40px;
+  }
+  @media (max-width:620px){
+    .synthesis-grid{grid-template-columns:1fr;gap:32px;}
+  }
+
+  .synth-item{position:relative;}
+  .synth-item .num{
+    font-family:'Fraunces',serif;
+    font-weight:500;
+    font-size:30px;
+    line-height:1;
+    color:var(--teal);
+    display:block;
+    margin-bottom:10px;
+    font-variant-numeric:tabular-nums;
+  }
+  .synth-item.alt .num{color:var(--clay);}
+  .synth-item h3{
+    font-size:15.5px;
+    font-weight:600;
+    margin:0 0 8px;
+    line-height:1.35;
+  }
+  .synth-item p.desc{
+    font-size:13.5px;
+    color:var(--ink-soft);
+    margin:0 0 12px;
+  }
+  .synth-item .action{
+    font-size:13.5px;
+    border-left:2px solid var(--teal);
+    padding-left:12px;
+  }
+  .synth-item.alt .action{border-left-color:var(--clay);}
+  .synth-item .action b{
+    font-weight:600;
+    color:var(--ink);
+  }
+
+  footer{
+    padding-top:32px;
+    margin-top:64px;
+    border-top:1px solid var(--line);
+    font-size:13px;
+    color:var(--ink-soft);
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <div class="htext">
+      <div class="meta"><span class="dot"></span> федеральные лидеры <span class="dot clay"></span> нишевые специалисты</div>
+      <h1>Бухгалтерский аутсорсинг для стоматологий</h1>
+      <p class="lede">15 сильнейших игроков рынка РФ — что у них хорошо получается и что стоит взять на вооружение.</p>
+    </div>
+    <svg class="motif" viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M48 14c-7 0-10 5-16 5-8 0-12-7-12 4 0 16 6 20 8 34 1 6 4 10 8 10s6-9 6-17 2-11 6-11 5 3 6 11 2 17 6 17 7-4 8-10c2-14 8-18 8-34 0-11-4-4-12-4-6 0-9-5-16-5Z" stroke="#2F6F5E" stroke-width="1.6" stroke-linejoin="round"/>
+      <line x1="20" y1="66" x2="76" y2="66" stroke="#96602F" stroke-width="1.6"/>
+      <line x1="24" y1="74" x2="72" y2="74" stroke="#96602F" stroke-width="1.6"/>
+      <line x1="28" y1="82" x2="68" y2="82" stroke="#96602F" stroke-width="1.6"/>
+    </svg>
+  </header>
+
+  <div class="intro">
+    <p>Ниже — два типа конкурентов. Первая группа — федеральные лидеры рынка бухгалтерского аутсорсинга: крупные, узнаваемые компании, которые задают стандарты качества и маркетинга в целом по отрасли, но не специализируются именно на стоматологиях.</p>
+    <p>Вторая группа — нишевые игроки, у которых есть отдельная услуга или кейсы именно для стоматологических клиник. Каждая компания в списке проверена: у каждой либо есть реальная страница с описанием услуги, либо подтверждённый кейс с клиникой.</p>
+  </div>
+
+  <nav class="index">
+    <div>
+      <p class="col-title">Федеральные лидеры</p>
+      <ol>
+        <li><a href="#c01"><span class="n">01</span>Моё дело</a></li>
+        <li><a href="#c02"><span class="n">02</span>1С-WiseAdvice</a></li>
+        <li><a href="#c03"><span class="n">03</span>СберРешения</a></li>
+        <li><a href="#c04"><span class="n">04</span>Информаудитсервис</a></li>
+        <li><a href="#c05"><span class="n">05</span>Кнопка</a></li>
+        <li><a href="#c06"><span class="n">06</span>Bellerage</a></li>
+        <li><a href="#c07"><span class="n">07</span>SCHNEIDER GROUP</a></li>
+        <li><a href="#c08"><span class="n">08</span>Acsour</a></li>
+      </ol>
+    </div>
+    <div class="group--niche">
+      <p class="col-title">Нишевые специалисты</p>
+      <ol>
+        <li><a href="#c09"><span class="n">09</span>Вектор Финанс</a></li>
+        <li><a href="#c10"><span class="n">10</span>Мелишефф</a></li>
+        <li><a href="#c11"><span class="n">11</span>Оптимум-Сопровождение</a></li>
+        <li><a href="#c12"><span class="n">12</span>Финанс Контроль</a></li>
+        <li><a href="#c13"><span class="n">13</span>РосКо</a></li>
+        <li><a href="#c14"><span class="n">14</span>БухАссистент</a></li>
+        <li><a href="#c15"><span class="n">15</span>Априори</a></li>
+      </ol>
+    </div>
+  </nav>
+
+  <section class="group group--federal">
+    <div class="group-head"><h2>Федеральные лидеры</h2></div>
+    <p class="group-note">Крупные компании общего профиля. Сильны масштабом, автоматизацией и маркетингом — у них есть чему поучиться, даже если стоматология не их основная ниша.</p>
+
+    <div class="company" id="c01">
+      <div class="row-top"><span class="idx">01</span><h3><a href="https://www.moedelo.org" target="_blank" rel="noopener">Моё дело</a></h3></div>
+      <p class="role">Лидер сегмента онлайн-бухгалтерии — облачная платформа с поддержкой живых бухгалтеров</p>
+      <div class="body-grid">
+        <div class="advantages">
+          <h4>Преимущества</h4>
+          <ul>
+            <li>Личный кабинет с документами и отчётами в реальном времени</li>
+            <li>Автоматическая адаптация под изменения законодательства</li>
+            <li>Тарифы — от ИП с нулевой отчётностью до сетей клиник</li>
+            <li>Сильный контент-маркетинг: блог, гайды, калькуляторы</li>
+          </ul>
+        </div>
+        <div class="takeaway">
+          <h4>Взять на вооружение</h4>
+          Личный кабинет клиента, калькулятор стоимости на сайте, контент по теме «бухгалтерия для стоматологии».
+        </div>
+      </div>
+    </div>
+
+    <div class="company" id="c02">
+      <div class="row-top"><span class="idx">02</span><h3><a href="https://1c-wiseadvice.ru" target="_blank" rel="noopener">1С-WiseAdvice</a></h3></div>
+      <p class="role">Крупный игрок с собственной IT-командой, ориентация на средний и крупный бизнес</p>
+      <div class="body-grid">
+        <div class="advantages">
+          <h4>Преимущества</h4>
+          <ul>
+            <li>Автоматизация проверок и сверок снижает влияние человеческого фактора</li>
+            <li>Кейсы с конкретными цифрами экономии на сайте</li>
+            <li>Закреплённая персональная команда за клиентом</li>
+            <li>Страхование профессиональной ответственности</li>
+          </ul>
+        </div>
+        <div class="takeaway">
+          <h4>Взять на вооружение</h4>
+          Публикация кейсов с цифрами, модель «команда, а не один бухгалтер», страховка как аргумент продаж.
+        </div>
+      </div>
+    </div>
+
+    <div class="company" id="c03">
+      <div class="row-top"><span class="idx">03</span><h3><a href="https://sber-solutions.ru" target="_blank" rel="noopener">СберРешения</a></h3></div>
+      <p class="role">Аутсорсинг бизнес-процессов от экосистемы Сбер</p>
+      <div class="body-grid">
+        <div class="advantages">
+          <h4>Преимущества</h4>
+          <ul>
+            <li>Бренд Сбера как фактор доверия для консервативного клиента</li>
+            <li>Комплексный подход «под ключ»</li>
+            <li>Готовность работать с сетевым бизнесом</li>
+            <li>Стандартизированные регламенты и SLA</li>
+          </ul>
+        </div>
+        <div class="takeaway">
+          <h4>Взять на вооружение</h4>
+          Чёткие SLA со сроками ответа и выполнения задач, зафиксированные в договоре.
+        </div>
+      </div>
+    </div>
+
+    <div class="company" id="c04">
+      <div class="row-top"><span class="idx">04</span><h3><a href="https://ias-group.ru" target="_blank" rel="noopener">Информаудитсервис (ИАС)</a></h3></div>
+      <p class="role">Один из лидеров рынка аутсорсинга учётных функций, многолетняя практика</p>
+      <div class="body-grid">
+        <div class="advantages">
+          <h4>Преимущества</h4>
+          <ul>
+            <li>Глубокая экспертиза в бухгалтерском и налоговом учёте</li>
+            <li>Отдельные отраслевые команды</li>
+            <li>Масштаб обслуживания — тысячи юрлиц</li>
+            <li>Высокий уровень интеграции с госсистемами</li>
+          </ul>
+        </div>
+        <div class="takeaway">
+          <h4>Взять на вооружение</h4>
+          Позиционирование отдельного «отраслевого отдела по медицине» — даже небольшого, из 2–3 человек.
+        </div>
+      </div>
+    </div>
+
+    <div class="company" id="c05">
+      <div class="row-top"><span class="idx">05</span><h3><a href="https://knopka.com" target="_blank" rel="noopener">Кнопка</a></h3></div>
+      <p class="role">Комплексный аутсорсинг для малого бизнеса, активно использует ИИ в обработке документов</p>
+      <div class="body-grid">
+        <div class="advantages">
+          <h4>Преимущества</h4>
+          <ul>
+            <li>Команда вместо одного бухгалтера: менеджер + консультант + юрист</li>
+            <li>Мобильное приложение для обмена документами</li>
+            <li>Разделение бухгалтеров на «клиентских» и «учётных» для скорости</li>
+          </ul>
+        </div>
+        <div class="takeaway">
+          <h4>Взять на вооружение</h4>
+          Удобный мессенджер или бот для коммуникации, пакет «бухгалтерия + юрист + кадры».
+        </div>
+      </div>
+    </div>
+
+    <div class="company" id="c06">
+      <div class="row-top"><span class="idx">06</span><h3><a href="https://bellerage.com" target="_blank" rel="noopener">Bellerage</a></h3></div>
+      <p class="role">Экспертиза в автоматизации бухгалтерии на базе 1С</p>
+      <div class="body-grid">
+        <div class="advantages">
+          <h4>Преимущества</h4>
+          <ul>
+            <li>Глубокая компетенция в настройке и доработке 1С</li>
+            <li>Автоматизация рутинных операций — сверки, загрузка выписок</li>
+          </ul>
+        </div>
+        <div class="takeaway">
+          <h4>Взять на вооружение</h4>
+          Связка «медицинская информационная система клиники → 1С» с автосписанием материалов.
+        </div>
+      </div>
+    </div>
+
+    <div class="company" id="c07">
+      <div class="row-top"><span class="idx">07</span><h3><a href="https://career.habr.com/companies/schneider-group" target="_blank" rel="noopener">SCHNEIDER GROUP</a></h3></div>
+      <p class="role">Международная компания, сопровождение бизнеса с иностранным капиталом</p>
+      <div class="body-grid">
+        <div class="advantages">
+          <h4>Преимущества</h4>
+          <ul>
+            <li>Мультиязычная отчётность — РСБУ и МСФО</li>
+            <li>Высокий уровень внутреннего контроля и аудита</li>
+          </ul>
+        </div>
+        <div class="takeaway">
+          <h4>Взять на вооружение</h4>
+          Принцип регулярного внутреннего аудита качества работы бухгалтеров по чек-листам.
+        </div>
+      </div>
+    </div>
+
+    <div class="company" id="c08">
+      <div class="row-top"><span class="idx">08</span><h3><a href="https://acsour.com" target="_blank" rel="noopener">Acsour</a></h3></div>
+      <p class="role">Специализация на расчёте зарплаты и HR-процессах</p>
+      <div class="body-grid">
+        <div class="advantages">
+          <h4>Преимущества</h4>
+          <ul>
+            <li>Экспертиза в сложных схемах мотивации и KPI-расчётах</li>
+            <li>Кадровое администрирование</li>
+          </ul>
+        </div>
+        <div class="takeaway">
+          <h4>Взять на вооружение</h4>
+          Отдельная услуга «расчёт зарплаты врачей» (оклад + % + УЕТ) как точка входа в боль клиники.
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <section class="group group--niche">
+    <div class="group-head"><h2>Нишевые специалисты — стоматология</h2></div>
+    <p class="group-note">У каждой компании ниже — либо отдельная страница услуг именно для стоматологий, либо подтверждённый кейс с клиникой. Самые близкие ориентиры для позиционирования.</p>
+
+    <div class="company" id="c09">
+      <div class="row-top"><span class="idx">09</span><h3><a href="https://www.vectorfinance.ru/buhgalterskie-uslugi/autsorsing/stomatologicheskiy-centr/" target="_blank" rel="noopener">Вектор Финанс</a></h3></div>
+      <p class="role">Москва — отдельная страница «Бухгалтерский аутсорсинг стоматологического центра»</p>
+      <div class="body-grid">
+        <div class="advantages">
+          <h4>Преимущества</h4>
+          <ul>
+            <li>Реальные отзывы клиентов, в т. ч. с многолетним сотрудничеством</li>
+            <li>Материальная ответственность за ошибки прописана как аргумент</li>
+          </ul>
+        </div>
+        <div class="takeaway">
+          <h4>Взять на вооружение</h4>
+          Долгосрочные именные отзывы как соцдоказательство именно в нише стоматологии.
+        </div>
+      </div>
+    </div>
+
+    <div class="company" id="c10">
+      <div class="row-top"><span class="idx">10</span><h3><a href="https://melisheff.ru/services/sfery-biznesa/bukhgalterskie-uslugi-dlya-stomatologicheskikh-klinik/" target="_blank" rel="noopener">Мелишефф</a></h3></div>
+      <p class="role">Москва — 15 лет на рынке, более 500 обслуженных компаний</p>
+      <div class="body-grid">
+        <div class="advantages">
+          <h4>Преимущества</h4>
+          <ul>
+            <li>Детальная страница про учёт в стоматологии: лицензия, расходники, оборудование</li>
+            <li>Аутстаффинг — бухгалтер числится в штате Мелишефф, а не клиента</li>
+            <li>Индивидуальный онлайн-калькулятор стоимости</li>
+          </ul>
+        </div>
+        <div class="takeaway">
+          <h4>Взять на вооружение</h4>
+          Калькулятор стоимости на сайте под параметры клиента: система налогообложения, число операций, сотрудников.
+        </div>
+      </div>
+    </div>
+
+    <div class="company" id="c11">
+      <div class="row-top"><span class="idx">11</span><h3><a href="https://op-c.ru/industry/dental" target="_blank" rel="noopener">Оптимум-Сопровождение</a></h3></div>
+      <p class="role">Самара — на рынке с 2010 года, отдельные страницы и для медицины, и для стоматологий</p>
+      <div class="body-grid">
+        <div class="advantages">
+          <h4>Преимущества</h4>
+          <ul>
+            <li>Глубокая проработка льгот: освобождение от НДС (ст. 149 НК РФ), ставка 0% на прибыль (ст. 284.1)</li>
+            <li>Прозрачная тарифная сетка — от 4 400 до 13 200 ₽/мес по типу клиники</li>
+            <li>Онлайн-тест на проверку права на налоговые льготы</li>
+          </ul>
+        </div>
+        <div class="takeaway">
+          <h4>Взять на вооружение</h4>
+          Бесплатный тест «есть ли у вас право на льготы» как лид-магнит, открытая таблица тарифов на сайте.
+        </div>
+      </div>
+    </div>
+
+    <div class="company" id="c12">
+      <div class="row-top"><span class="idx">12</span><h3><a href="https://finans-control.ru/napravleniya/stomatologiya" target="_blank" rel="noopener">Финанс Контроль</a></h3></div>
+      <p class="role">Симферополь / Севастополь — региональный игрок со страницей под стоматологии</p>
+      <div class="body-grid">
+        <div class="advantages">
+          <h4>Преимущества</h4>
+          <ul>
+            <li>Комплексное сопровождение: бухгалтерия + юридическое + кадровое</li>
+            <li>Помощь в выборе налогового режима, учёт затрат на сертификацию препаратов</li>
+          </ul>
+        </div>
+        <div class="takeaway">
+          <h4>Взять на вооружение</h4>
+          Пакетное предложение «бухгалтерия + юрист + кадры» для небольших клиник в регионах.
+        </div>
+      </div>
+    </div>
+
+    <div class="company" id="c13">
+      <div class="row-top"><span class="idx">13</span><h3><a href="https://rosco.su/press/autsorsing-bukhgalterii-dlya-stomatologii/" target="_blank" rel="noopener">РосКо</a></h3></div>
+      <p class="role">Крупная многопрофильная консалтинговая компания с публикацией про стоматологии</p>
+      <div class="body-grid">
+        <div class="advantages">
+          <h4>Преимущества</h4>
+          <ul>
+            <li>Экспертный контент про технологические карты расхода материалов</li>
+            <li>Общая репутация крупного консалтингового игрока</li>
+          </ul>
+        </div>
+        <div class="takeaway">
+          <h4>Взять на вооружение</h4>
+          Контент, который показывает глубину понимания отрасли — например, разбор техкарт расхода материалов.
+        </div>
+      </div>
+    </div>
+
+    <div class="company" id="c14">
+      <div class="row-top"><span class="idx">14</span><h3><a href="https://buhassistent.ru/portfolio/buchcases/medicinskie-uslugi/buh-medismile/" target="_blank" rel="noopener">БухАссистент</a></h3></div>
+      <p class="role">Подтверждённый кейс: сопровождение сети стоматологий «МедиСмайл»</p>
+      <div class="body-grid">
+        <div class="advantages">
+          <h4>Преимущества</h4>
+          <ul>
+            <li>Именной отзыв директора клиники в открытом доступе</li>
+            <li>Опыт именно с сетью, а не одиночной клиникой</li>
+          </ul>
+        </div>
+        <div class="takeaway">
+          <h4>Взять на вооружение</h4>
+          Формат кейса с именной цитатой от руководителя клиники — сильнее общих формулировок без цифр.
+        </div>
+      </div>
+    </div>
+
+    <div class="company" id="c15">
+      <div class="row-top"><span class="idx">15</span><h3><a href="https://apriori-accounting.ru/cases" target="_blank" rel="noopener">Априори</a></h3></div>
+      <p class="role">Подтверждённый кейс: сеть стоматологий, 5 филиалов, оборот 600+ млн руб.</p>
+      <div class="body-grid">
+        <div class="advantages">
+          <h4>Преимущества</h4>
+          <ul>
+            <li>Перевод клиники с УСН 6% на ОСНО с оформлением льгот по прибыли и НДС</li>
+            <li>Конкретные цифры результата в кейсе, а не общие фразы</li>
+          </ul>
+        </div>
+        <div class="takeaway">
+          <h4>Взять на вооружение</h4>
+          Формат кейса: масштаб клиники + конкретная цифра результата — именно так его стоит подавать.
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <section class="synthesis">
+    <div class="synthesis-head">
+      <h2>Сквозные паттерны</h2>
+    </div>
+
+    <div class="synthesis-grid">
+
+      <div class="synth-item">
+        <span class="num">01</span>
+        <h3>Отдельная страница под нишу</h3>
+        <p class="desc">Вектор Финанс, Мелишефф, Оптимум-Сопровождение, Финанс Контроль, РосКо — у каждого своя страница «бухгалтерия для стоматологий» с профильными терминами: лицензирование, расходники, льгота по НДС, счёт 97.</p>
+        <div class="action"><b>Взять:</b> отдельный лендинг или КП именно для стоматологий, на языке врачей и владельцев клиник.</div>
+      </div>
+
+      <div class="synth-item alt">
+        <span class="num">02</span>
+        <h3>Экспертиза в льготах (ст. 149, ст. 284.1 НК РФ)</h3>
+        <p class="desc">Оптимум-Сопровождение выстроили вокруг этого всю страницу: раздельный учёт, освобождение от НДС, ставка 0% на прибыль.</p>
+        <div class="action"><b>Взять:</b> сделать экспертизу по льготам ключевым УТП — риск их потерять реальная боль клиник.</div>
+      </div>
+
+      <div class="synth-item">
+        <span class="num">03</span>
+        <h3>Прозрачные тарифы и калькулятор</h3>
+        <p class="desc">Оптимум-Сопровождение — открытая таблица цен от 4 400 до 13 200 ₽/мес. Мелишефф — интерактивный калькулятор под параметры клиента.</p>
+        <div class="action"><b>Взять:</b> вилку цен или калькулятор на сайте — снижает барьер для первого обращения.</div>
+      </div>
+
+      <div class="synth-item alt">
+        <span class="num">04</span>
+        <h3>Бесплатный тест как лид-магнит</h3>
+        <p class="desc">Оптимум-Сопровождение предлагает короткий онлайн-тест «есть ли у вас право на льготу».</p>
+        <div class="action"><b>Взять:</b> бесплатную проверку текущей бухгалтерии или экспресс-тест на льготы — мягкий вход в воронку.</div>
+      </div>
+
+      <div class="synth-item">
+        <span class="num">05</span>
+        <h3>Кейсы с цифрами и именами</h3>
+        <p class="desc">БухАссистент — кейс «МедиСмайл» с цитатой директора. Априори — сеть из 5 филиалов, оборот 600+ млн руб., конкретный результат по налогам.</p>
+        <div class="action"><b>Взять:</b> масштаб клиники + цифра результата + цитата руководителя — сильнее общих фраз.</div>
+      </div>
+
+      <div class="synth-item alt">
+        <span class="num">06</span>
+        <h3>Бухгалтер в штате аутсорсера</h3>
+        <p class="desc">Мелишефф подчёркивает: бухгалтер закреплён за клиентом, но числится в их штате — клиент не платит за него взносы отдельно.</p>
+        <div class="action"><b>Взять:</b> явно проговаривать эту экономию — не все клиенты понимают разницу в деньгах.</div>
+      </div>
+
+      <div class="synth-item">
+        <span class="num">07</span>
+        <h3>Комплексный пакет, а не только учёт</h3>
+        <p class="desc">Финанс Контроль, Кнопка, 1С-WiseAdvice продают пакет: бухгалтерия + юридическое + кадровое сопровождение + проверки.</p>
+        <div class="action"><b>Взять:</b> продавать трудовое право для медиков, лицензирование и проверки Роспотребнадзора одним пакетом.</div>
+      </div>
+
+      <div class="synth-item alt">
+        <span class="num">08</span>
+        <h3>Команда, а не один человек</h3>
+        <p class="desc">1С-WiseAdvice и Кнопка закрепляют за клиентом команду — бухгалтер, консультант, юрист.</p>
+        <div class="action"><b>Взять:</b> даже при небольшом штате — позиционировать работу как командную, снимает страх «а если бухгалтер уволится».</div>
+      </div>
+
+      <div class="synth-item">
+        <span class="num">09</span>
+        <h3>Экспертиза в номенклатуре материалов</h3>
+        <p class="desc">РосКо и Bellerage подчёркивают понимание расходников и техкарт списания; Bellerage — ещё и интеграцию МИС с 1С.</p>
+        <div class="action"><b>Взять:</b> связка «МИС клиники → 1С» с автосписанием материалов — редкое и сильное УТП в нише.</div>
+      </div>
+
+      <div class="synth-item alt">
+        <span class="num">10</span>
+        <h3>Автоматизация как реальный аргумент</h3>
+        <p class="desc">Кнопка публично говорит о применении ИИ в обработке документов, разделяя бухгалтеров на «клиентских» и «учётных».</p>
+        <div class="action"><b>Взять:</b> если есть реальные AI-инструменты в процессах — это может стать отличием от нишевых игроков, у которых в основном ручной труд + 1С.</div>
+      </div>
+
+    </div>
+  </section>
+
+  <footer>
+    Каждая компания в списке проверена напрямую — по официальному сайту, странице услуги или подтверждённому кейсу.
+  </footer>
+
+</div>
+</body>
+</html>
